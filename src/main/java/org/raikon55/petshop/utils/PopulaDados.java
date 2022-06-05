@@ -5,9 +5,15 @@ import java.util.Arrays;
 import javax.annotation.PostConstruct;
 
 import org.raikon55.petshop.domain.Categoria;
+import org.raikon55.petshop.domain.Especie;
+import org.raikon55.petshop.domain.Pet;
 import org.raikon55.petshop.domain.Produto;
+import org.raikon55.petshop.domain.Raca;
 import org.raikon55.petshop.repositories.CategoriaRepository;
+import org.raikon55.petshop.repositories.EspecieRepository;
+import org.raikon55.petshop.repositories.PetRepository;
 import org.raikon55.petshop.repositories.ProdutoRepository;
+import org.raikon55.petshop.repositories.RacaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +26,15 @@ public class PopulaDados {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private EspecieRepository especieRepository;
+
+    @Autowired
+    private RacaRepository racaRepository;
+
+    @Autowired
+    private PetRepository petRepository;
+
     @PostConstruct
     public void cadastrar() {
         Categoria cat1 = new Categoria(null, "Alimento");
@@ -30,6 +45,17 @@ public class PopulaDados {
         Produto p2 = new Produto(null, "Sache", 80.0);
         Produto p3 = new Produto(null, "Vermifugo", 20.0);
         Produto p4 = new Produto(null, "Shampoo", 50.0);
+
+        Especie esp1 = new Especie(null, "Cachorro");
+        Especie esp2 = new Especie(null, "Gato");
+
+        Raca rac1 = new Raca(null, "Shitzu");
+        Raca rac2 = new Raca(null, "Akita");
+        Raca rac3 = new Raca(null, "Persa");
+
+        Pet pet1 = new Pet(null, "John", 6, esp1, rac1);
+        Pet pet2 = new Pet(null, "Hana", 5, esp1, rac2);
+        Pet pet3 = new Pet(null, "Mewth", 0, esp2, rac3);
 
         cat1.getProdutos().addAll(Arrays.asList(p1, p2));
         cat2.getProdutos().addAll(Arrays.asList(p3, p4));
@@ -42,6 +68,9 @@ public class PopulaDados {
 
         this.categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         this.produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
+        this.especieRepository.saveAll(Arrays.asList(esp1, esp2));
+        this.racaRepository.saveAll(Arrays.asList(rac1, rac2, rac3));
+        this.petRepository.saveAll(Arrays.asList(pet1, pet2, pet3));
     }
 
 }
