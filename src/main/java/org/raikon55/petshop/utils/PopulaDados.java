@@ -5,12 +5,16 @@ import java.util.Arrays;
 import javax.annotation.PostConstruct;
 
 import org.raikon55.petshop.domain.Categoria;
+import org.raikon55.petshop.domain.Cidade;
 import org.raikon55.petshop.domain.Especie;
+import org.raikon55.petshop.domain.Estado;
 import org.raikon55.petshop.domain.Pet;
 import org.raikon55.petshop.domain.Produto;
 import org.raikon55.petshop.domain.Raca;
 import org.raikon55.petshop.repositories.CategoriaRepository;
+import org.raikon55.petshop.repositories.CidadeRepository;
 import org.raikon55.petshop.repositories.EspecieRepository;
+import org.raikon55.petshop.repositories.EstadoRepository;
 import org.raikon55.petshop.repositories.PetRepository;
 import org.raikon55.petshop.repositories.ProdutoRepository;
 import org.raikon55.petshop.repositories.RacaRepository;
@@ -35,6 +39,12 @@ public class PopulaDados {
     @Autowired
     private PetRepository petRepository;
 
+    @Autowired
+    private EstadoRepository estadoRepository;
+
+    @Autowired
+    private CidadeRepository cidadeRepository;
+
     @PostConstruct
     public void cadastrar() {
         Categoria cat1 = new Categoria(null, "Alimento");
@@ -57,6 +67,16 @@ public class PopulaDados {
         Pet pet2 = new Pet(null, "Hana", 5, esp1, rac2);
         Pet pet3 = new Pet(null, "Mewth", 0, esp2, rac3);
 
+        Estado est1 = new Estado(null, "Minas Gerais");
+        Estado est2 = new Estado(null, "São Paulo");
+
+        Cidade cid1 = new Cidade(null, "Belo Horizonte", est1);
+        Cidade cid2 = new Cidade(null, "Capelinha", est1);
+        Cidade cid3 = new Cidade(null, "São Paulo", est2);
+
+        est1.getCidades().addAll(Arrays.asList(cid1, cid2));
+        est2.getCidades().addAll(Arrays.asList(cid3));
+
         cat1.getProdutos().addAll(Arrays.asList(p1, p2));
         cat2.getProdutos().addAll(Arrays.asList(p3, p4));
         cat3.getProdutos().addAll(Arrays.asList(p4));
@@ -71,6 +91,8 @@ public class PopulaDados {
         this.especieRepository.saveAll(Arrays.asList(esp1, esp2));
         this.racaRepository.saveAll(Arrays.asList(rac1, rac2, rac3));
         this.petRepository.saveAll(Arrays.asList(pet1, pet2, pet3));
+        this.estadoRepository.saveAll(Arrays.asList(est1, est2));
+        this.cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
     }
 
 }
