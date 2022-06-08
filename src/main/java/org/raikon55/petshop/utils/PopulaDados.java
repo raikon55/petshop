@@ -6,15 +6,20 @@ import javax.annotation.PostConstruct;
 
 import org.raikon55.petshop.domain.Categoria;
 import org.raikon55.petshop.domain.Cidade;
+import org.raikon55.petshop.domain.Cliente;
+import org.raikon55.petshop.domain.Endereco;
 import org.raikon55.petshop.domain.Especie;
 import org.raikon55.petshop.domain.Estado;
+import org.raikon55.petshop.domain.Funcionario;
 import org.raikon55.petshop.domain.Pet;
 import org.raikon55.petshop.domain.Produto;
 import org.raikon55.petshop.domain.Raca;
 import org.raikon55.petshop.repositories.CategoriaRepository;
 import org.raikon55.petshop.repositories.CidadeRepository;
+import org.raikon55.petshop.repositories.EnderecoRepository;
 import org.raikon55.petshop.repositories.EspecieRepository;
 import org.raikon55.petshop.repositories.EstadoRepository;
+import org.raikon55.petshop.repositories.PessoaRepository;
 import org.raikon55.petshop.repositories.PetRepository;
 import org.raikon55.petshop.repositories.ProdutoRepository;
 import org.raikon55.petshop.repositories.RacaRepository;
@@ -45,6 +50,12 @@ public class PopulaDados {
     @Autowired
     private CidadeRepository cidadeRepository;
 
+    @Autowired
+    private PessoaRepository pessoaRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
     @PostConstruct
     public void cadastrar() {
         Categoria cat1 = new Categoria(null, "Alimento");
@@ -74,6 +85,14 @@ public class PopulaDados {
         Cidade cid2 = new Cidade(null, "Capelinha", est1);
         Cidade cid3 = new Cidade(null, "São Paulo", est2);
 
+        Cliente clt1 = new Cliente(null, "Jose Maria", "jose@mail.com", "335.194.320-21", "FISICA");
+
+        Funcionario fnc1 = new Funcionario(null, "Maria Jose", "maria@mail.com", "551.872.200.12", "ATENDENTE");
+
+        Endereco end1 = new Endereco(null, "Rua Tupis", "500", "Apto 101", "Pindorama", "30111222", clt1, cid1);
+        Endereco end2 = new Endereco(null, "Av. Tamoios", "100", "Casa", "Oca", "3968000", fnc1, cid2);
+        Endereco end3 = new Endereco(null, "Rua Aranãs", "10", "Apto 201", "Centro", "01153000", fnc1, cid3);
+
         est1.getCidades().addAll(Arrays.asList(cid1, cid2));
         est2.getCidades().addAll(Arrays.asList(cid3));
 
@@ -86,6 +105,10 @@ public class PopulaDados {
         p3.getCategorias().addAll(Arrays.asList(cat2));
         p4.getCategorias().addAll(Arrays.asList(cat2, cat3));
 
+        clt1.getTelefones().addAll(Arrays.asList("3516-2000", "9191-0000"));
+
+        fnc1.getTelefones().addAll(Arrays.asList("3279-0001", "9090-0002"));
+
         this.categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         this.produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
         this.especieRepository.saveAll(Arrays.asList(esp1, esp2));
@@ -93,7 +116,8 @@ public class PopulaDados {
         this.petRepository.saveAll(Arrays.asList(pet1, pet2, pet3));
         this.estadoRepository.saveAll(Arrays.asList(est1, est2));
         this.cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
+        this.pessoaRepository.saveAll(Arrays.asList(clt1, fnc1));
+        this.enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
     }
 
 }
-

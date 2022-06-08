@@ -2,40 +2,49 @@ package org.raikon55.petshop.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Cidade implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Pessoa implements Serializable {
 
-    private static final long serialVersionUID = -6181121381302156995L;
+    private static final long serialVersionUID = -7232725169783407081L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+    private String email;
+    private String codNacional;
 
-    @ManyToOne
-    @JoinColumn(name = "id_estado")
-    private Estado estado;
-
-    @OneToMany(mappedBy = "cidade")
+    @OneToMany(mappedBy = "pessoa")
     private List<Endereco> enderecos = new ArrayList<>();
 
-    public Cidade() {
+    @ElementCollection
+    @CollectionTable(name = "TELEFONE", joinColumns = @JoinColumn(name = "id_pessoa"))
+    private Set<String> telefones = new HashSet<>();
+
+    public Pessoa() {
     }
 
-    public Cidade(Integer id, String nome, Estado estado) {
+    public Pessoa(Integer id, String nome, String email, String codNacional) {
         this.id = id;
         this.nome = nome;
-        this.estado = estado;
+        this.email = email;
+        this.codNacional = codNacional;
     }
 
     public Integer getId() {
@@ -54,12 +63,20 @@ public class Cidade implements Serializable {
         this.nome = nome;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCodNacional() {
+        return codNacional;
+    }
+
+    public void setCodNacional(String codNacional) {
+        this.codNacional = codNacional;
     }
 
     public List<Endereco> getEnderecos() {
@@ -70,12 +87,19 @@ public class Cidade implements Serializable {
         this.enderecos = enderecos;
     }
 
+    public Set<String> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(Set<String> telefones) {
+        this.telefones = telefones;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         return result;
     }
 
@@ -87,18 +111,12 @@ public class Cidade implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Cidade other = (Cidade) obj;
+        Pessoa other = (Pessoa) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (nome == null) {
-            if (other.nome != null)
-                return false;
-        } else if (!nome.equals(other.nome))
-            return false;
         return true;
     }
-
 }
