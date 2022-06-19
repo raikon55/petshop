@@ -3,8 +3,6 @@ package org.raikon55.petshop.domain;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,14 +14,14 @@ import org.raikon55.petshop.domain.enums.SituacaoPagamento;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pagamento implements Serializable {
+public abstract class Pagamento implements Serializable {
 
     private static final long serialVersionUID = 4098535502352253812L;
 
     @Id
     private Integer id;
     private Double valor;
-    private SituacaoPagamento situacao;
+    private Integer situacao;
 
     @MapsId
     @OneToOne
@@ -36,7 +34,7 @@ public class Pagamento implements Serializable {
     public Pagamento(Integer id, Double valor, SituacaoPagamento situacao, Servico servico) {
         this.id = id;
         this.valor = valor;
-        this.situacao = situacao;
+        this.situacao = situacao.getCod();
         this.servico = servico;
     }
 
@@ -57,11 +55,11 @@ public class Pagamento implements Serializable {
     }
 
     public SituacaoPagamento getSituacao() {
-        return situacao;
+        return SituacaoPagamento.toEnum(situacao);
     }
 
     public void setSituacao(SituacaoPagamento situacao) {
-        this.situacao = situacao;
+        this.situacao = situacao.getCod();
     }
 
     public Servico getServico() {
