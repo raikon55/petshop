@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 
 import org.raikon55.petshop.domain.enums.SituacaoPagamento;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pagamento implements Serializable {
@@ -23,6 +25,7 @@ public abstract class Pagamento implements Serializable {
     private Double valor;
     private Integer situacao;
 
+    @JsonIgnore
     @MapsId
     @OneToOne
     @JoinColumn(name = "id_servico")
