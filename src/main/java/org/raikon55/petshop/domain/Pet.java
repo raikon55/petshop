@@ -1,6 +1,8 @@
 package org.raikon55.petshop.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Pet implements Serializable {
@@ -27,6 +30,9 @@ public class Pet implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_raca")
     private Raca raca;
+
+    @OneToMany(mappedBy = "pet")
+    private List<Servico> servicos = new ArrayList<>();
 
     public Pet() {
     }
@@ -77,6 +83,14 @@ public class Pet implements Serializable {
 
     public void setRaca(Raca raca) {
         this.raca = raca;
+    }
+
+    public List<Servico> getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(List<Servico> servicos) {
+        this.servicos = servicos;
     }
 
     @Override

@@ -111,12 +111,16 @@ public class PopulaDados {
         Endereco end3 = new Endereco(null, "Rua Aranãs", "10", "Apto 201", "Centro", "01153000", fnc1, cid3);
 
         Servico srv1 = new Servico(null, sdf.parse("02/09/2021 09:00"), sdf.parse("02/09/2021 12:00"), "Tosa", clt1,
-                fnc1);
+                fnc1, pet1);
         Servico srv2 = new Servico(null, sdf.parse("03/09/2021 12:00"), sdf.parse("04/09/2021 12:00"), "Hotel", clt1,
-                fnc1);
+                fnc1, pet2);
+        Servico srv3 = new Servico(null, sdf.parse("05/09/2021 16:00"), sdf.parse("05/09/2021 16:30"), "Hotel", clt1,
+                fnc1, pet3);
 
         Pagamento pgt1 = new PagCartao(null, 60.0, SituacaoPagamento.QUITADO, srv2, 6);
         Pagamento pgt2 = new PagDinheiro(null, 100.0, SituacaoPagamento.PENDENTE, srv1, sdf.parse("02/09/2021 00:00"),
+                null);
+        Pagamento pgt3 = new PagDinheiro(null, 75.0, SituacaoPagamento.QUITADO, srv3, sdf.parse("05/09/2021 16:30"),
                 null);
 
         est1.getCidades().addAll(Arrays.asList(cid1, cid2));
@@ -133,6 +137,9 @@ public class PopulaDados {
 
         srv1.setPagamento(pgt2);
         srv2.setPagamento(pgt1);
+        srv2.getProdutos().addAll(Arrays.asList(p1, p2, p4));
+        srv3.setPagamento(pgt3);
+        srv3.getProdutos().addAll(Arrays.asList(p3));
 
         clt1.getTelefones().addAll(Arrays.asList("3516-2000", "9191-0000"));
         clt1.getServicos().addAll(Arrays.asList(srv1, srv2));
@@ -149,8 +156,8 @@ public class PopulaDados {
         this.cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
         this.pessoaRepository.saveAll(Arrays.asList(clt1, fnc1));
         this.enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
-        this.servicoRepository.saveAll(Arrays.asList(srv1, srv2));
-        this.pagamentoRepository.saveAll(Arrays.asList(pgt1, pgt2));
+        this.servicoRepository.saveAll(Arrays.asList(srv1, srv2, srv3));
+        this.pagamentoRepository.saveAll(Arrays.asList(pgt1, pgt2, pgt3));
     }
 
 }
