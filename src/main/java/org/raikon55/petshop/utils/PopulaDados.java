@@ -4,8 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
-import javax.annotation.PostConstruct;
-
 import org.raikon55.petshop.domain.Categoria;
 import org.raikon55.petshop.domain.Cidade;
 import org.raikon55.petshop.domain.Cliente;
@@ -71,7 +69,6 @@ public class PopulaDados {
     @Autowired
     private PagamentoRepository pagamentoRepository;
 
-    @PostConstruct
     public void cadastrar() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
