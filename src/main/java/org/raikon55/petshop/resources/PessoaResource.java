@@ -2,8 +2,10 @@ package org.raikon55.petshop.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.raikon55.petshop.domain.Pessoa;
+import org.raikon55.petshop.dto.PessoaDTO;
 import org.raikon55.petshop.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -54,8 +56,11 @@ public class PessoaResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<Pessoa>> findAll() {
+    public ResponseEntity<List<PessoaDTO>> findAll() {
         List<Pessoa> list = this.service.findAll();
-        return ResponseEntity.ok().body(list);
+        List<PessoaDTO> listDto = list.stream()
+                .map(obj -> new PessoaDTO(obj))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
     }
 }
