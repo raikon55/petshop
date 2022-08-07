@@ -18,6 +18,18 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString(exclude = { "produtos" })
+@EqualsAndHashCode(exclude = { "produtos" })
+
 @Entity
 public class Servico implements Serializable {
 
@@ -50,9 +62,6 @@ public class Servico implements Serializable {
     @JoinTable(name = "SERVICO_PRODUTO", joinColumns = @JoinColumn(name = "id_servico"), inverseJoinColumns = @JoinColumn(name = "id_produto"))
     private List<Produto> produtos = new ArrayList<>();
 
-    public Servico() {
-    }
-
     public Servico(Integer id, Date dataEntrada, Date dataSaida, String descricao, Cliente cliente,
             Funcionario funcionario, Pet pet) {
         this.id = id;
@@ -62,102 +71,5 @@ public class Servico implements Serializable {
         this.cliente = cliente;
         this.funcionario = funcionario;
         this.pet = pet;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Date getDataEntrada() {
-        return dataEntrada;
-    }
-
-    public void setDataEntrada(Date dataEntrada) {
-        this.dataEntrada = dataEntrada;
-    }
-
-    public Date getDataSaida() {
-        return dataSaida;
-    }
-
-    public void setDataSaida(Date dataSaida) {
-        this.dataSaida = dataSaida;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
-    }
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Servico other = (Servico) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
     }
 }

@@ -8,6 +8,18 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString(callSuper = true, exclude = { "servicos" })
+@EqualsAndHashCode(callSuper = true, exclude = { "servicos" })
+
 @Entity
 public class Cliente extends Pessoa {
 
@@ -19,28 +31,8 @@ public class Cliente extends Pessoa {
     @OneToMany(mappedBy = "cliente")
     private List<Servico> servicos = new ArrayList<>();
 
-    public Cliente() {
-    }
-
     public Cliente(Integer id, String nome, String email, String codNacional, String tipo) {
         super(id, nome, email, codNacional);
         this.tipo = tipo;
     }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public List<Servico> getServicos() {
-        return servicos;
-    }
-
-    public void setServicos(List<Servico> servicos) {
-        this.servicos = servicos;
-    }
-
 }

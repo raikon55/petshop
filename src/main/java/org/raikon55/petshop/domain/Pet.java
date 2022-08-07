@@ -12,6 +12,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString(exclude = { "servicos" })
+@EqualsAndHashCode(exclude = { "servicos" })
+
 @Entity
 public class Pet implements Serializable {
 
@@ -34,87 +46,11 @@ public class Pet implements Serializable {
     @OneToMany(mappedBy = "pet")
     private List<Servico> servicos = new ArrayList<>();
 
-    public Pet() {
-    }
-
     public Pet(Integer id, String nome, Integer idade, Especie especie, Raca raca) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
         this.especie = especie;
         this.raca = raca;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Integer getIdade() {
-        return idade;
-    }
-
-    public void setIdade(Integer idade) {
-        this.idade = idade;
-    }
-
-    public Especie getEspecie() {
-        return especie;
-    }
-
-    public void setEspecie(Especie especie) {
-        this.especie = especie;
-    }
-
-    public Raca getRaca() {
-        return raca;
-    }
-
-    public void setRaca(Raca raca) {
-        this.raca = raca;
-    }
-
-    public List<Servico> getServicos() {
-        return servicos;
-    }
-
-    public void setServicos(List<Servico> servicos) {
-        this.servicos = servicos;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Pet other = (Pet) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
     }
 }

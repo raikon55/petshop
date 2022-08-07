@@ -14,6 +14,18 @@ import org.raikon55.petshop.domain.enums.SituacaoPagamento;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@EqualsAndHashCode
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pagamento implements Serializable {
@@ -31,70 +43,10 @@ public abstract class Pagamento implements Serializable {
     @JoinColumn(name = "id_servico")
     private Servico servico;
 
-    public Pagamento() {
-    }
-
     public Pagamento(Integer id, Double valor, SituacaoPagamento situacao, Servico servico) {
         this.id = id;
         this.valor = valor;
         this.situacao = situacao.getCod();
         this.servico = servico;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
-
-    public SituacaoPagamento getSituacao() {
-        return SituacaoPagamento.toEnum(situacao);
-    }
-
-    public void setSituacao(SituacaoPagamento situacao) {
-        this.situacao = situacao.getCod();
-    }
-
-    public Servico getServico() {
-        return servico;
-    }
-
-    public void setServico(Servico servico) {
-        this.servico = servico;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Pagamento other = (Pagamento) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
     }
 }
